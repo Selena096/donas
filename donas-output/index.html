@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Mini Donas artesanales personalizables. Línea Clásica y Colección Gourmet. Pedidos por WhatsApp."/>
+  <title>CaprichArt – Mini Donas</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/tokens.css"/>
+  <link rel="stylesheet" href="css/global.css"/>
+  <link rel="stylesheet" href="css/components.css"/>
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════
+       NAV
+  ══════════════════════════════════════ -->
+  <nav class="nav" id="nav">
+    <img src="logo.png" alt="CaprichArt" class="nav__logo"/>
+    <button class="nav__cta" onclick="document.getElementById('clasica').scrollIntoView({behavior:'smooth'})">🍩 Hacer Pedido</button>
+  </nav>
+
+
+  <!-- ══════════════════════════════════════
+       HERO
+  ══════════════════════════════════════ -->
+  <section class="hero">
+    <div class="hero__bg" aria-hidden="true">
+      <img src="assets/hero-bg.jpeg" alt=""/>
+      <img src="assets/hero-bg.jpeg" alt=""/>
+    </div>
+
+    <div class="hero__content">
+      <img src="logo.png" alt="CaprichArt" class="hero__logo fade-up"/>
+
+      <h1 class="hero__title fade-up">
+        Mini Donas<br/><span>CaprichArt</span>
+      </h1>
+
+      <p class="hero__sub fade-up">
+        Personaliza tus favoritas o descubre<br/>nuestra nueva colección gourmet.
+      </p>
+
+      <div class="hero__btns fade-up">
+        <button class="btn-hero-clasica" onclick="document.getElementById('clasica').scrollIntoView({behavior:'smooth'})">🍩 Ver Línea Clásica</button>
+        <button class="btn-hero-gourmet" disabled>
+          <span class="btn-pronto">Próximamente</span>
+          ✨ Ver Colección Gourmet
+        </button>
+      </div>
+    </div>
+
+    <span class="hero__scroll" aria-hidden="true">↓</span>
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       LÍNEA CLÁSICA — NUEVO FLUJO
+  ══════════════════════════════════════ -->
+  <section class="section-clasica" id="clasica">
+    <span class="section-eyebrow fade-up">🍩 Línea Clásica</span>
+    <h2 class="section-title fade-up">Haz tu Pedido</h2>
+    <p class="section-desc fade-up">Elige cuántas cajas quieres y personalízalas a tu gusto.</p>
+
+    <!-- PASO 1: Cantidad -->
+    <div class="paso-wrap fade-up" id="paso1-wrap">
+      <div class="paso-header">
+        <span class="paso-numero">1</span>
+        <span class="paso-titulo">¿Cuántas cajas quieres?</span>
+      </div>
+      <div class="cajas-selector">
+        <div class="caja-card">
+          <div class="caja-card__nombre">🍩 Caja × 9</div>
+          <div class="caja-card__detalle">2 salsas + 1 topping<br/>ó 1 salsa + 2 toppings</div>
+          <div class="caja-card__precio">$11.000 c/u</div>
+          <div class="counter">
+            <button class="counter__btn" onclick="cambiarCajas('c9',-1)">−</button>
+            <span class="counter__val" id="qty-c9">0</span>
+            <button class="counter__btn" onclick="cambiarCajas('c9',1)">+</button>
+          </div>
+        </div>
+        <div class="caja-card">
+          <div class="caja-card__nombre">🍩🍩 Caja × 15</div>
+          <div class="caja-card__detalle">3 salsas + 3 toppings<br/>La favorita 💕</div>
+          <div class="caja-card__precio">$17.000 c/u</div>
+          <div class="counter">
+            <button class="counter__btn" onclick="cambiarCajas('c15',-1)">−</button>
+            <span class="counter__val" id="qty-c15">0</span>
+            <button class="counter__btn" onclick="cambiarCajas('c15',1)">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="resumen-cantidad" id="resumen-cantidad"></div>
+    </div>
+
+    <!-- PASO 2: Modo -->
+    <div class="paso-wrap fade-up" id="paso2-wrap" style="display:none">
+      <div class="paso-header">
+        <span class="paso-numero">2</span>
+        <span class="paso-titulo">¿Cómo quieres configurar tus cajas?</span>
+      </div>
+      <div class="modo-chips" style="justify-content:center">
+        <button class="modo-chip" id="modo-iguales" onclick="elegirModoGlobal('iguales')">🔁 Todas iguales</button>
+        <button class="modo-chip" id="modo-personalizado" onclick="elegirModoGlobal('personalizado')">🎨 Personalizar cada caja</button>
+      </div>
+    </div>
+
+    <!-- PASO 3: Configuradores -->
+    <div class="paso-wrap fade-up" id="paso3-wrap" style="display:none">
+      <div class="paso-header">
+        <span class="paso-numero">3</span>
+        <span class="paso-titulo">Personaliza tus donas</span>
+      </div>
+      <div id="configuradores-wrap"></div>
+      <button class="btn-confirmar" onclick="confirmarConfigs()">✅ Confirmar configuración</button>
+    </div>
+
+    <!-- PASO 4: Pago -->
+    <div class="paso-wrap fade-up" id="paso4-wrap" style="display:none">
+      <div class="paso-header">
+        <span class="paso-numero">4</span>
+        <span class="paso-titulo">¿Cómo vas a pagar?</span>
+      </div>
+      <div class="pago-chips">
+        <button class="pago-chip" onclick="elegirPago('Efectivo',this)">💵 Efectivo</button>
+        <button class="pago-chip" onclick="elegirPago('Transferencia',this)">📲 Transferencia</button>
+      </div>
+    </div>
+
+    <!-- PASO 5: Entrega -->
+    <div class="paso-wrap fade-up" id="paso5-wrap" style="display:none">
+      <div class="paso-header">
+        <span class="paso-numero">5</span>
+        <span class="paso-titulo">¿Cómo quieres recibirlas?</span>
+      </div>
+      <div class="entrega-chips">
+        <button class="entrega-chip" onclick="elegirEntrega('domicilio',this)">
+          <span class="entrega-chip__icon">🛵</span>Domicilio
+        </button>
+        <button class="entrega-chip" onclick="elegirEntrega('recoge',this)">
+          <span class="entrega-chip__icon">📍</span>Recojo en punto
+        </button>
+      </div>
+    </div>
+
+    <!-- PASO 6: Datos domicilio -->
+    <div class="paso-wrap fade-up" id="paso6-wrap" style="display:none">
+      <div class="paso-header">
+        <span class="paso-numero">6</span>
+        <span class="paso-titulo">Datos de entrega</span>
+      </div>
+      <div class="domicilio-form">
+        <input class="input-field" id="input-direccion" type="text" placeholder="📌 Dirección (ej: Calle 5 #10-20)"/>
+        <input class="input-field" id="input-barrio"    type="text" placeholder="🏘️ Barrio"/>
+        <input class="input-field" id="input-nombre"    type="text" placeholder="👤 Nombre de quien recibe"/>
+        <div class="error-msg" id="paso6-err"></div>
+        <button class="btn-confirmar" onclick="confirmarDomicilio()">✅ Confirmar datos</button>
+      </div>
+    </div>
+
+    <!-- RESUMEN FINAL -->
+    <div class="paso-wrap" id="resumen-final-wrap" style="display:none"></div>
+
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       DIVISOR GOURMET
+  ══════════════════════════════════════ -->
+  <div class="divider" id="divider-gourmet">
+    <img class="divider__bg" src="assets/clasica1.jpeg" alt="Colección Gourmet"/>
+    <div class="divider__content fade-up">
+      <div class="divider__eyebrow">✦ Nuevo Lanzamiento</div>
+      <h2 class="divider__title">Colección<br/><span>Gourmet</span></h2>
+      <p class="divider__desc">Sabores exclusivos, glaseados premium y decoración artesanal.</p>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════
+       COLECCIÓN GOURMET
+  ══════════════════════════════════════ -->
+  <section class="section-gourmet" id="gourmet">
+    <span class="section-eyebrow fade-up">✨ Edición Especial</span>
+    <h2 class="section-title fade-up">Sabores Exclusivos</h2>
+    <p class="section-desc fade-up">Arma tu caja a medida. Elige cuántos sabores y cuántas donas de cada uno.</p>
+
+    <!-- Preview decorativa -->
+    <div class="sabores-preview fade-up">
+      <div class="sabor-preview-card"><span class="sabor-preview-card__icon">🍪</span><span class="sabor-preview-card__name">Oreo Supreme</span><span class="sabor-preview-card__tag">Próximamente</span></div>
+      <div class="sabor-preview-card"><span class="sabor-preview-card__icon">🍫</span><span class="sabor-preview-card__name">Chocolate Intenso</span><span class="sabor-preview-card__tag">Próximamente</span></div>
+      <div class="sabor-preview-card"><span class="sabor-preview-card__icon">☕</span><span class="sabor-preview-card__name">Café Latte</span><span class="sabor-preview-card__tag">Próximamente</span></div>
+      <div class="sabor-preview-card"><span class="sabor-preview-card__icon">🍓</span><span class="sabor-preview-card__name">Fresa Cream</span><span class="sabor-preview-card__tag">Próximamente</span></div>
+      <div class="sabor-preview-card"><span class="sabor-preview-card__icon">🍋</span><span class="sabor-preview-card__name">Lemon Velvet</span><span class="sabor-preview-card__tag">Próximamente</span></div>
+      <div class="sabor-preview-card"><span class="sabor-preview-card__icon">🍊</span><span class="sabor-preview-card__name">Orange Delight</span><span class="sabor-preview-card__tag">Próximamente</span></div>
+      <div class="sabor-preview-card"><span class="sabor-preview-card__icon">🌿</span><span class="sabor-preview-card__name">Vanilla Signature</span><span class="sabor-preview-card__tag">Próximamente</span></div>
+    </div>
+
+    <!-- Configurador Gourmet -->
+    <div class="caja-gourmet-wrap fade-up">
+      <div class="caja-gourmet">
+        <img class="caja-gourmet__img" src="assets/clasica1.jpeg" alt="Caja Gourmet"/>
+        <div class="caja-gourmet__body">
+          <span class="caja-gourmet__eyebrow">✦ Edición Limitada</span>
+          <h3 class="caja-gourmet__title">Caja Gourmet × 9</h3>
+          <p class="caja-gourmet__desc">$15.000 · Elige hasta 3 sabores y reparte tus 9 donas como quieras.</p>
+
+          <!-- Paso 1: Número de sabores -->
+          <div class="num-sabores-group">
+            <span class="num-sabores-label">Paso 1 — ¿Cuántos sabores en tu caja?</span>
+            <div class="num-sabores-chips">
+              <button class="num-chip" id="g-num-1" onclick="elegirNumSabores(1)">1 sabor</button>
+              <button class="num-chip" id="g-num-2" onclick="elegirNumSabores(2)">2 sabores</button>
+              <button class="num-chip" id="g-num-3" onclick="elegirNumSabores(3)">3 sabores</button>
+            </div>
+          </div>
+
+          <!-- Paso 2: Elegir sabores -->
+          <div class="config-group">
+            <span class="config-label config-label--gourmet" id="g-instruccion-sabores">Paso 2 — Elige el/los sabores</span>
+            <div class="chips-gourmet" id="g-chips-sabores">
+              <!-- Renderizado por gourmet.js -->
+            </div>
+            <div class="error-msg error-msg--gourmet" id="g-global-err"></div>
+          </div>
+
+          <!-- Paso 3: Contadores (oculto hasta completar sabores) -->
+          <div id="g-contadores-wrap" style="display:none">
+            <span class="config-label config-label--gourmet">Paso 3 — ¿Cuántas de cada sabor?</span>
+            <div id="g-contadores-inner"></div>
+          </div>
+
+          <!-- Resumen precio (oculto hasta tener cantidades) -->
+          <div id="g-resumen-wrap" style="display:none">
+            <div class="gourmet-total" id="g-total-display">0 donas</div>
+            <div class="gourmet-precio" id="g-precio-display">Agrega donas para ver el precio</div>
+          </div>
+
+          <!-- Pago -->
+          <div class="config-group" style="margin-top:18px">
+            <span class="config-label config-label--gourmet">💳 Forma de pago</span>
+            <div class="pago-chips">
+              <button class="pago-chip pago-chip--gourmet" onclick="elegirPagoG('Efectivo',this)">💵 Efectivo</button>
+              <button class="pago-chip pago-chip--gourmet" onclick="elegirPagoG('Transferencia',this)">📲 Transferencia</button>
+            </div>
+          </div>
+
+          <button class="btn-enviar btn-enviar--gourmet" onclick="enviarGourmet()">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            ✨ Quiero ser de los primeros
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       FINAL CTA
+  ══════════════════════════════════════ -->
+  <section class="final-cta">
+    <h2 class="final-cta__title fade-up">Pedidos rápidos<br/>por WhatsApp 💬</h2>
+    <p class="final-cta__sub fade-up">Personaliza tu caja y tu pedido llega listo.<br/>¡Respondemos rápido! 🍩</p>
+    <a href="https://wa.me/573000000000" class="btn-final fade-up" target="_blank" rel="noopener noreferrer">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Pedir Ahora
+    </a>
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════ -->
+  <footer class="footer">
+    <p>Hecho con 💕 por <span>CaprichArt</span> · Mini Donas artesanales</p>
+  </footer>
+
+
+  <!-- ══════════════════════════════════════
+       SCRIPTS (orden importante)
+  ══════════════════════════════════════ -->
+  <script src="js/config.js"></script>
+  <script src="js/whatsapp.js"></script>
+  <script src="js/clasica.js"></script>
+  <script src="js/gourmet.js"></script>
+  <script>
+    // ── Scroll reveal ──
+    const revealObserver = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+    document.querySelectorAll('.fade-up').forEach(el => revealObserver.observe(el));
+
+    // ── Nav shadow on scroll ──
+    window.addEventListener('scroll', () => {
+      document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 20);
+    }, { passive: true });
+
+    // ── Smooth anchor scroll ──
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+  </script>
+
+</body>
+</html>
