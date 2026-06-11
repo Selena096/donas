@@ -102,7 +102,6 @@ function construirConfiguradores() {
     }
   }
 }
-}
 
 function fichaHTML(cfg, etiqueta, idx) {
   const esModo9 = cfg.tipo === 9;
