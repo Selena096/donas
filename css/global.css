@@ -180,7 +180,8 @@ a { text-decoration: none; }
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  flex-direction: column;
+  gap: 4px;
   background: transparent;
   color: var(--text);
   border: 2px solid var(--champagne);
@@ -196,6 +197,25 @@ a { text-decoration: none; }
   background: var(--champagne);
   color: var(--noir);
 }
+.btn-hero-gourmet:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+  border-color: var(--muted);
+  color: var(--muted);
+}
+.btn-pronto {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--pink);
+  background: var(--white);
+  border-radius: var(--r-full);
+  padding: 2px 10px;
+  line-height: 1.6;
+}
+
 .hero__scroll {
   position: absolute;
   bottom: 24px; left: 50%;
