@@ -130,7 +130,7 @@ a { text-decoration: none; }
   max-width: 520px;
 }
 .hero__logo {
-  width: min(240px, 72vw);
+  width: min(320px, 85vw);
   margin: 0 auto var(--space-md);
 }
 .hero__title {
