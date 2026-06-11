@@ -9,7 +9,7 @@ const CONFIG = {
 
   // ── WhatsApp ──────────────────────────────
   // Número con código de país, sin + ni espacios
-  WA_NUMBER: '573000000000',
+  WA_NUMBER: '573168831640',
 
   // ── Feature Flags ─────────────────────────
   // Cambia a true cuando quieras mostrar la
