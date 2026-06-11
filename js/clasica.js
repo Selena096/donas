@@ -71,20 +71,37 @@ function construirConfiguradores() {
   for (let i = 0; i < pedido.cajas9;  i++) listaCajas.push(9);
   for (let i = 0; i < pedido.cajas15; i++) listaCajas.push(15);
   const numFichas = pedido.modo === 'iguales' ? 1 : listaCajas.length;
+  const usarGrid = numFichas === 2;
+
+  if (usarGrid) {
+    wrap.innerHTML = '<div class="container-fluid px-0"><div class="row g-3" id="fichas-row"></div></div>';
+  }
+
   for (let i = 0; i < numFichas; i++) {
     const tipo = listaCajas[i];
-    const cfg = { id: `cfg${i}`, tipo, choco: 0, vainilla: 0,
+    const cfg = {
+      id: `cfg${i}`, tipo, choco: 0, vainilla: 0,
       modo: tipo === 9 ? null : 'fijo',
       maxSalsas: tipo === 9 ? 0 : 3, maxToppings: tipo === 9 ? 0 : 3,
       minSalsas: tipo === 9 ? 0 : 1, minToppings: tipo === 9 ? 0 : 1,
-      salsas: [], toppings: [] };
+      salsas: [], toppings: []
+    };
     pedido.configs.push(cfg);
     const totalCajas = pedido.cajas9 + pedido.cajas15;
     const etiqueta = pedido.modo === 'iguales'
       ? (totalCajas === 1 ? (tipo === 9 ? 'Caja ×9' : 'Caja ×15') : 'Configuración para todas las cajas')
       : `${tipo === 9 ? 'Caja ×9' : 'Caja ×15'} — Caja ${i + 1}`;
-    wrap.innerHTML += fichaHTML(cfg, etiqueta, i);
+
+    if (usarGrid) {
+      const col = document.createElement('div');
+      col.className = 'col-12 col-md-6';
+      col.innerHTML = fichaHTML(cfg, etiqueta, i);
+      document.getElementById('fichas-row').appendChild(col);
+    } else {
+      wrap.innerHTML += fichaHTML(cfg, etiqueta, i);
+    }
   }
+}
 }
 
 function fichaHTML(cfg, etiqueta, idx) {
