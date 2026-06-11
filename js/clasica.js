@@ -76,6 +76,7 @@ function construirConfiguradores() {
     const cfg = { id: `cfg${i}`, tipo, choco: 0, vainilla: 0,
       modo: tipo === 9 ? null : 'fijo',
       maxSalsas: tipo === 9 ? 0 : 3, maxToppings: tipo === 9 ? 0 : 3,
+      minSalsas: tipo === 9 ? 0 : 1, minToppings: tipo === 9 ? 0 : 1,
       salsas: [], toppings: [] };
     pedido.configs.push(cfg);
     const totalCajas = pedido.cajas9 + pedido.cajas15;
@@ -187,8 +188,8 @@ function confirmarConfigs() {
     const cfg = pedido.configs[i];
     if (cfg.choco + cfg.vainilla !== cfg.tipo)   { setErr(`${cfg.id}-err`, `⚠️ Asigna exactamente ${cfg.tipo} donas`); return; }
     if (cfg.tipo === 9 && !cfg.modo)             { setErr(`${cfg.id}-err`, `⚠️ Elige una combinación`); return; }
-    if (cfg.salsas.length < cfg.maxSalsas)       { setErr(`${cfg.id}-err`, `⚠️ Elige ${cfg.maxSalsas} salsa(s)`); return; }
-    if (cfg.toppings.length < cfg.maxToppings)   { setErr(`${cfg.id}-err`, `⚠️ Elige ${cfg.maxToppings} topping(s)`); return; }
+    if (cfg.salsas.length < (cfg.minSalsas || cfg.maxSalsas))     { setErr(`${cfg.id}-err`, `⚠️ Elige al menos ${cfg.minSalsas || cfg.maxSalsas} salsa(s)`); return; }
+    if (cfg.toppings.length < (cfg.minToppings || cfg.maxToppings)) { setErr(`${cfg.id}-err`, `⚠️ Elige al menos ${cfg.minToppings || cfg.maxToppings} topping(s)`); return; }
     clearErr(`${cfg.id}-err`);
   }
   show('paso4-wrap');
