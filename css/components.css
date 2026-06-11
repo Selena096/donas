@@ -479,7 +479,7 @@
 .paso-titulo { font-family:var(--font-display); font-size:18px; font-weight:700; color:var(--text); }
 
 .cajas-selector { display:flex; flex-wrap:wrap; gap:16px; justify-content:center; margin-bottom:16px; }
-.caja-card { background:var(--white); border:2px solid var(--border); border-radius:var(--r-xl); padding:22px 24px; min-width:200px; flex:1; max-width:300px; text-align:left; }
+.caja-card { background:var(--white); border:2px solid var(--border); border-radius:var(--r-xl); padding:22px 24px; flex:1 1 280px; max-width:340px; text-align:left; }
 .caja-card__nombre { font-family:var(--font-display); font-weight:700; font-size:17px; color:var(--text); margin-bottom:4px; }
 .caja-card__detalle { font-size:12px; color:var(--muted); margin-bottom:12px; line-height:1.6; }
 .caja-card__precio { font-family:var(--font-display); font-size:22px; font-weight:700; color:var(--pink); margin-bottom:14px; }
