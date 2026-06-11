@@ -125,7 +125,7 @@ function fichaHTML(cfg, etiqueta, idx) {
       </div>
     </div>` : ''}
     <div class="config-group">
-      <span class="config-label">🍯 Salsas${esModo9 ? '' : ' (elige 3)'}</span>
+      <span class="config-label">🍯 Salsas${esModo9 ? '' : ' (elige 1 a 3)'}</span>
       ${esModo9 ? `<span class="config-note" id="${cfg.id}-salsas-note">Elige tu modo primero</span>` : ''}
       <div class="chips" id="${cfg.id}-salsas-chips">
         <button class="chip" onclick="toggleChipCfg(${idx},'salsas','Leche condensada',this)">Leche condensada</button>
@@ -135,7 +135,7 @@ function fichaHTML(cfg, etiqueta, idx) {
       <div class="error-msg" id="${cfg.id}-salsas-err"></div>
     </div>
     <div class="config-group">
-      <span class="config-label">🌈 Toppings${esModo9 ? '' : ' (elige 3)'}</span>
+      <span class="config-label">🌈 Toppings${esModo9 ? '' : ' (elige 1 a 3)'}</span>
       ${esModo9 ? `<span class="config-note" id="${cfg.id}-toppings-note">Elige tu modo primero</span>` : ''}
       <div class="chips" id="${cfg.id}-toppings-chips">
         <button class="chip" onclick="toggleChipCfg(${idx},'toppings','Chocodiscos',this)">Chocodisk</button>
@@ -283,7 +283,8 @@ function enviarPedidoCompleto() {
   }
   msg += `💵 *Pago:* ${pedido.pago}\n\n`;
   msg += `¡Hola! Me gustaría hacer este pedido 😊🍩`;
-  window.open(`https://wa.me/${CONFIG.WA_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
+  const msgLimpio = msg.replace(/\n/g, '%0A');
+  window.open(`https://wa.me/${CONFIG.WA_NUMBER}?text=${msgLimpio}`, '_blank');
 }
 
 function detalleConfig(cfg) {
