@@ -27,6 +27,7 @@ function cambiarCajas(tipo, delta) {
   else                { pedido.cajas15 = Math.max(0, pedido.cajas15 + delta); $('qty-c15').textContent = pedido.cajas15; }
   resetDesdePaso2();
   actualizarResumenCantidad();
+  if (pedido.cajas9 > 0 || pedido.cajas15 > 0) actualizarBotonesModo();
 }
 
 function actualizarResumenCantidad() {
@@ -50,7 +51,22 @@ function resetDesdePaso2() {
   ['paso2-wrap','paso3-wrap','paso4-wrap','paso5-wrap','paso6-wrap','resumen-final-wrap']
     .forEach(id => hide(id));
 }
-
+function actualizarBotonesModo() {
+  const mezclado = pedido.cajas9 > 0 && pedido.cajas15 > 0;
+  const btnIguales = $('modo-iguales');
+  const nota = $('modo-iguales-nota');
+  if (mezclado) {
+    btnIguales.disabled = true;
+    btnIguales.classList.remove('modo-chip--selected');
+    btnIguales.classList.add('modo-chip--disabled');
+    if (nota) nota.style.display = 'block';
+    if (pedido.modo === 'iguales') pedido.modo = null;
+  } else {
+    btnIguales.disabled = false;
+    btnIguales.classList.remove('modo-chip--disabled');
+    if (nota) nota.style.display = 'none';
+  }
+}
 // ── PASO 2: MODO ──────────────────────────────
 function elegirModoGlobal(modo) {
   pedido.modo = modo;
