@@ -464,9 +464,11 @@
   color: var(--champagne);
 }
 .modo-chip--disabled {
-  opacity: .4;
+  opacity: .35;
   cursor: not-allowed;
   pointer-events: none;
+  border-color: #ccc !important;
+  color: #aaa !important;
 }
 
 /* ── RESPONSIVE ── */
