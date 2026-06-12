@@ -299,8 +299,7 @@ function enviarPedidoCompleto() {
   }
   msg += `💵 *Pago:* ${pedido.pago}\n\n`;
   msg += `¡Hola! Me gustaría hacer este pedido 😊🍩`;
-  const msgLimpio = msg.replace(/\n/g, '%0A');
-  window.open(`https://wa.me/${CONFIG.WA_NUMBER}?text=${msgLimpio}`, '_blank');
+  window.open(`https://wa.me/${CONFIG.WA_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
 }
 
 function detalleConfig(cfg) {
