@@ -288,41 +288,43 @@ function mostrarResumen() {
 function enviarPedidoCompleto() {
   const totalDonas = pedido.cajas9 * CONFIG.PRECIO_CAJA_9 + pedido.cajas15 * CONFIG.PRECIO_CAJA_15;
   const esIgual = pedido.modo === 'iguales';
-  let msg = `🍩✨ *PEDIDO CAPRICHART* ✨🍩\n━━━━━━━━━━━━━━━━━━━━━━━\n\n📦 *Pedido:*\n`;
-  if (pedido.cajas9  > 0) msg += `  🍩 ${pedido.cajas9} caja(s) ×9 donas — ${fmt(pedido.cajas9 * CONFIG.PRECIO_CAJA_9)}\n`;
-  if (pedido.cajas15 > 0) msg += `  🍩 ${pedido.cajas15} caja(s) ×15 donas — ${fmt(pedido.cajas15 * CONFIG.PRECIO_CAJA_15)}\n`;
+  let msg = `*PEDIDO CAPRICHART*\n`;
+  msg += `━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+  msg += `*Pedido:*\n`;
+  if (pedido.cajas9  > 0) msg += `  - ${pedido.cajas9} caja(s) x9 donas: ${fmt(pedido.cajas9 * CONFIG.PRECIO_CAJA_9)}\n`;
+  if (pedido.cajas15 > 0) msg += `  - ${pedido.cajas15} caja(s) x15 donas: ${fmt(pedido.cajas15 * CONFIG.PRECIO_CAJA_15)}\n`;
   msg += `\n`;
   if (esIgual) {
-    msg += `🎨 *Configuración (todas iguales):*\n` + detalleConfig(pedido.configs[0]);
+    msg += `*Configuracion (todas iguales):*\n` + detalleConfig(pedido.configs[0]);
   } else {
     const lista = [];
-    for (let i = 0; i < pedido.cajas9;  i++) lista.push({ label: `Caja ×9 — #${i+1}`,             cfg: pedido.configs[i] });
-    for (let i = 0; i < pedido.cajas15; i++) lista.push({ label: `Caja ×15 — #${pedido.cajas9+i+1}`, cfg: pedido.configs[pedido.cajas9+i] });
-    lista.forEach(item => { msg += `🎨 *${item.label}:*\n` + detalleConfig(item.cfg); });
+    for (let i = 0; i < pedido.cajas9;  i++) lista.push({ label: `Caja x9 - #${i+1}`, cfg: pedido.configs[i] });
+    for (let i = 0; i < pedido.cajas15; i++) lista.push({ label: `Caja x15 - #${pedido.cajas9+i+1}`, cfg: pedido.configs[pedido.cajas9+i] });
+    lista.forEach(item => { msg += `*${item.label}:*\n` + detalleConfig(item.cfg); });
   }
   msg += `━━━━━━━━━━━━━━━━━━━━━━━\n`;
-  msg += `💰 *Total donas:* ${fmt(totalDonas)}\n`;
+  msg += `*Total donas:* ${fmt(totalDonas)}\n`;
   if (pedido.entrega === 'domicilio') {
-    msg += `🛵 *Domicilio:* A convenir\n`;
-    msg += `💳 *Total a pagar:* ${fmt(totalDonas)} + domicilio\n`;
-    msg += `\n🛵 *Datos de entrega:*\n`;
-    msg += `  📌 Dirección: ${pedido.direccion}\n`;
-    msg += `  🏘️ Barrio: ${pedido.barrio}\n`;
-    msg += `  👤 Recibe: ${pedido.nombreRecibe}\n`;
+    msg += `*Domicilio:* A convenir\n`;
+    msg += `*Total a pagar:* ${fmt(totalDonas)} + domicilio\n`;
+    msg += `\n*Datos de entrega:*\n`;
+    msg += `  Direccion: ${pedido.direccion}\n`;
+    msg += `  Barrio: ${pedido.barrio}\n`;
+    msg += `  Recibe: ${pedido.nombreRecibe}\n`;
   } else {
-    msg += `💳 *Total a pagar:* ${fmt(totalDonas)}\n`;
-    msg += `📍 *Recoge en:* ${CONFIG.PUNTO_RECOGIDA}\n`;
+    msg += `*Total a pagar:* ${fmt(totalDonas)}\n`;
+    msg += `*Recoge en:* ${CONFIG.PUNTO_RECOGIDA}\n`;
   }
-  msg += `💵 *Pago:* ${pedido.pago}\n\n`;
-  msg += `¡Hola! Me gustaría hacer este pedido 😊🍩`;
+  msg += `*Pago:* ${pedido.pago}\n\n`;
+  msg += `Hola! Me gustaria hacer este pedido`;
   window.open(`https://wa.me/${CONFIG.WA_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
 }
 
 function detalleConfig(cfg) {
   let t = '';
-  if (cfg.choco    > 0) t += `  🍫 Chocolate: ${cfg.choco} dona(s)\n`;
-  if (cfg.vainilla > 0) t += `  🍦 Vainilla: ${cfg.vainilla} dona(s)\n`;
-  t += `  🍯 Salsas: ${cfg.salsas.join(', ')}\n`;
-  t += `  🌈 Toppings: ${cfg.toppings.join(', ')}\n\n`;
+  if (cfg.choco    > 0) t += `  Chocolate: ${cfg.choco} dona(s)\n`;
+  if (cfg.vainilla > 0) t += `  Vainilla: ${cfg.vainilla} dona(s)\n`;
+  t += `  Salsas: ${cfg.salsas.join(', ')}\n`;
+  t += `  Toppings: ${cfg.toppings.join(', ')}\n\n`;
   return t;
 }
